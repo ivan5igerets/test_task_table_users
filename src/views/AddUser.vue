@@ -14,12 +14,15 @@
 
         </div>
 
-        <button @click="addition">добавить</button>
+        <button @click="addNewUser">добавить</button>
+
+        <button @click="count">узнать колличество записей</button>
         
     </div>
 </template>
 
 <script>
+
 export default {
     name: 'AddUser',
     data() {
@@ -30,12 +33,27 @@ export default {
             email: ''
         }
     },
+    computed: {
+        getMaxId() {
+             return this.$store.getters.getMaxId || 0;
+        }
+    },
     methods: {
-        addition() {
-            console.log(this.name);
-            console.log(this.surName);
-            console.log(this.phone);
-            console.log(this.email);
+        count() {
+            console.log(this.getMaxId);
+        },
+        addNewUser() {
+
+            let userData = [
+                this.name,
+                this.surname,
+                this.phone,
+                this.email
+            ]
+
+            this.$store.dispatch("addNewUserToStore", userData)
+
+            this.$router.push('/')
         }
     }
 }

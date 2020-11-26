@@ -14,7 +14,9 @@
 
         </div>
 
-        <button @click="addition">добавить</button>
+        {{id}}
+
+        <button @click="edit">править</button>
         
     </div>
 </template>
@@ -27,16 +29,49 @@ export default {
             name: '',
             surname: '',
             phone: '',
-            email: ''
+            email: '',
+            id: this.$route.params.id
+        }
+    },
+    computed: {
+        getUsersList() {
+            return this.$store.getters.getUsersList || [];
         }
     },
     methods: {
-        addition() {
-            console.log(this.name);
-            console.log(this.surName);
-            console.log(this.phone);
-            console.log(this.email);
+        edit() {
+            let user = {
+                id: this.id,
+                name: this.name,
+                surname: this.surname,
+                phone: this.phone,
+                email: this.email
+            }
+
+            this.$store.dispatch('editUser', user)
+
+            this.$router.push('/')
+        },
+        filling() {
+           let users = this.getUsersList
+        //    console.log(users);
+
+           for (let user of users) {
+               if (this.id == user.id) {
+
+                   this.name = user.name
+                   this.surname = user.surname
+                   this.phone = user.phone
+                   this.email = user.email
+
+                //    console.log('bingo');
+                   break
+               }
+           }
         }
+    },
+    mounted() {
+        this.filling()
     }
 }
 </script>

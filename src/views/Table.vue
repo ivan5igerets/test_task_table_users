@@ -15,6 +15,10 @@
             />
         </table>
 
+        {{getUsersList}}
+
+        <!-- {{users}} -->
+
     </div>
 </template>
 
@@ -25,14 +29,27 @@ export default {
     name: 'Table',
     data() {
         return {
-            users: [
-                {id: 1, name: 'Ivan', surname: 'Pyatigorets,', phone: '380668363673', email: 'ivan5igirets@gmail.com'},
-                {id: 2, name: 'kaban', surname: 'dsforets,', phone: '3dfg8363673', email: 'ivdsfgirets@gmail.com'},
-            ],
+            users: []
         }
+    },
+    computed: {
+        getUsersList() {
+            return this.$store.getters.getUsersList || [];
+        }
+    },
+    watch: {
+        getUsersList: function(newVal) {
+            this.users = newVal
+        }
+    },
+    beforeMount() {
+        this.users = this.getUsersList;
     },
     components: {
         TableItem
+    },
+    methods: {
+      
     }
 }
 </script>

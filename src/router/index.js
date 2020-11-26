@@ -18,9 +18,10 @@ const routes = [
     component: AddUser
   },
   {
-    path: '/edit_user',
+    path: '/edit_user/:id',
     name: 'EditUser',
-    component: EditUser
+    component: EditUser,
+    props: (route) => ({ query: route.query.q })
   },
 ]
 

@@ -11,6 +11,28 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'App',
+  computed: {
+    getMaxId() {
+      return this.$store.getters.getMaxId;
+    }
+  },
+  mounted() {
+    if (this.getMaxId == 0) {
+
+      let users = localStorage.getItem('users')
+      users = JSON.parse(users)
+      // console.log(users);
+
+      this.$store.dispatch('getLocalSorageData', users)
+    }
+
+  }
+}
+</script>
+
 <style>
 * {
   text-align: center;
