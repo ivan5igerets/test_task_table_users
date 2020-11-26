@@ -1,23 +1,28 @@
 <template>
-    <div class="table_page">
-
-        <!-- <button>добавить пользователя</button> -->
+    <div class="table_div">
 
         <router-link to="/add_user">Добавить</router-link>
 
         <br> <br>
 
-        <table ref="tbl" class="tbl">
-            <!-- тут дожна выводится вся информация через "v-for" -->
-            <TableItem
-                    v-for="user of users" :key="user.id"
-                    v-bind:user="user"
-            />
+        <table ref="tbl" class="table">
+
+             <tbody>
+                <tr>
+                    <th> id </th>
+                    <th> name </th>
+                    <th> surname </th>
+                    <th> phone </th>
+                    <th> email </th>
+                    <th> actions </th>
+                </tr>
+                    <TableItem
+                            v-for="user of users" :key="user.id"
+                            v-bind:user="user"
+                    />
+
+            </tbody>
         </table>
-
-        {{getUsersList}}
-
-        <!-- {{users}} -->
 
     </div>
 </template>
@@ -55,13 +60,37 @@ export default {
 </script>
 
 <style>
-.tbl {
-    border-collapse: collapse; /*убираем пустые промежутки между ячейками*/
-    border: 1px solid grey; /*устанавливаем для таблицы внешнюю границу серого цвета толщиной 1px*/
+a {
+    display: inline-block;
+    text-decoration: none;
+    background:rgb(221, 221, 221) ;
+    color: rgb(97, 97, 97);
+    text-transform: uppercase;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    padding: 15px 20px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    transition: 0.4s ease-in-out;
 }
-td {
-    padding: 5px; /* Поля в ячейках */
-    border: 1px solid #333;
+
+a:hover {
+    background:rgb(185, 185, 185) ;
 }
+
+.table_div {
+   width: 100%;
+}
+
+.table {
+
+    min-width: 40%; 
+    border: 1px solid grey; 
+    border-radius: 3px;
+    margin: auto; 
+
+    border-collapse: collapse;
+}
+
 
 </style>

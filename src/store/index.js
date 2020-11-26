@@ -22,17 +22,33 @@ export default new Vuex.Store({
 
             let users = this.state.users || []
 
-            // console.log('users', users);
-
             if (users != null) {
                 users.push(user)
             } 
-            // else {
-            //     users[0] = user
-            // }
-
+    
             ctx.commit('updateUsers', users)
             ctx.commit('increaseId', this.state.max_id + 1)
+        },
+        async importJsonArray(ctx, users) {
+
+
+            let max_id = this.state.max_id
+            let allUsers = this.state.users
+
+            for (let i = 0; i < users.length; i++) {
+                max_id = ++max_id 
+                let user = {
+                    id: max_id,
+                    name: users[i].name,
+                    surname: users[i].surname,
+                    phone: users[i].phone,
+                    email: users[i].email
+                }
+                allUsers.push(user)
+            }
+
+            ctx.commit('updateUsers', allUsers)
+            ctx.commit('increaseId', max_id)
         },
         async editUser(ctx, user) {
 
@@ -55,12 +71,8 @@ export default new Vuex.Store({
         removeUser(ctx, id) {
             let users = this.state.users
 
-            // console.log('remove', id);
-
             for(let i = 0; i < users.length; ++i) {
-                // console.log(i);
                 if (users[i].id == id) {
-                    // console.log(users[i].id);
                     users.splice(i, 1)
                     break
                 }
@@ -72,8 +84,6 @@ export default new Vuex.Store({
     mutations: {
         updateUsers(state, users) {
             this.state.users = users
-
-            // Vue.set(state.users, users)
 
             localStorage.setItem('users', JSON.stringify(users));
         },
